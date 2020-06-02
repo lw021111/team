@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+//业务员管理
+Route::prefix('salesman')->group(function(){
+	Route::get('/','SalesmanController@index');
+	
+});
