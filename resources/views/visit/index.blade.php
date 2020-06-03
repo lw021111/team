@@ -17,43 +17,47 @@
 	<div>
 		<ul class="nav navbar-nav">
 			<li><a href="">客户管理</a></li>
-			<li class="active"><a href="{{url('salesman')}}">业务员管理</a></li>
-			<li><a href="{{url('visit')}}">拜访会议</a></li>
+			<li><a href="{{url('salesman')}}">业务员管理</a></li>
+			<li class="active"><a href="{{url('visit')}}">拜访会议</a></li>
 			<li><a href="">综合查询</a></li>
 			<li><a href="">统计分析</a></li>
 			<li><a href="">系统管理</a></li>
 	</div>
 	</div>
 </nav>
-<center><h1>业务员列表</h1></center>
-<a href="{{url('salesman/create')}}" class="btn btn-primary">添加</a><hr>
+<center><h1>拜访会议列表</h1></center>
+<a href="{{url('visit/create')}}" class="btn btn-primary">添加</a><hr>
 <table class="table table-hover">
 	
 	<thead>
 		<tr>
-			<th>业务员ID</th>
-			<th>名称</th>
-			<th>性别</th>
-			<th>办公电话</th>
-			<th>手机</th>
+			<th>业务员名称</th>
+			<th>客户名称</th>
+			<th>访问时间</th>
+			<th>访问人</th>
+			<th>访问地址</th>
+			<th>访问详情</th>
+			<th>下次访问时间</th>
 			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach ($info as $k=>$v)
 		<tr @if($k%2==0) class="warning" @else class="danger" @endif>
-			<td>{{$v->s_id}}</td>
 			<td>{{$v->s_name}}</td>
-			<td>{{$v->s_sex==1?'男':'女'}}</td>
-			<td>{{$v->s_phone}}</td>
-			<td>{{$v->s_mobile}}</td>
+			<td>{{$v->c_name}}</td>
+			<td>{{date('Y-m-d H:i:s',$v->v_time)}}</td>
+			<td>{{$v->v_man}}</td>
+			<td>{{$v->v_address}}</td>
+			<td>{{$v->v_detail}}</td>
+			<td>{{$v->v_next_time}}</td>
 			<td>
-				<a href="{{url('salesman/edit/'.$v->s_id)}}" class="btn btn-warning">编辑</a> || 
-				<a href="javascript:;" s_id="{{$v->s_id}}" class="btn btn-danger">删除</a>
+				<a href="{{url('visit/edit/'.$v->v_id)}}" class="btn btn-warning">编辑</a> || 
+				<a href="javascript:;" v_id="{{$v->v_id}}" class="btn btn-danger">删除</a>
 			</td>
 		</tr>
 		@endforeach
-		<tr><td colspan=6 align="center">{{$info->links()}}</td></tr>
+		<tr><td colspan=8 align="center">{{$info->links()}}</td></tr>
 	</tbody>
 </table>
 <script>
@@ -67,10 +71,10 @@ $(document).on('click','.page-item a',function(){
 });
 $(document).on('click','.btn-danger',function(){
 	var _this=$(this);
-	var id=_this.attr('s_id');
+	var id=_this.attr('v_id');
 	if(confirm('是否确认删除')){
 		$.ajax({
-			url:"{{url('salesman/destroy')}}",
+			url:"{{url('visit/destroy')}}",
 			type:'post',
 			data:{id:id},
 			dataType:'json',
@@ -86,6 +90,5 @@ $(document).on('click','.btn-danger',function(){
 })
 
 </script>
-
 </body>
 </html>
