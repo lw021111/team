@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class client extends Model
 {
     //
@@ -43,4 +44,5 @@ public static function getClientIndex($pageSzie){
 
     return self::orderBy('c_id','desc')->paginate($pageSzie);
 }
-}
+
+
